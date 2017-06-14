@@ -63,8 +63,7 @@ static void fw_download_handler(struct mg_connection *c, int ev, void *p,
         if (hm.body.len != 0) {
           LOG(LL_DEBUG, ("HTTP header: file size: %d", (int) hm.body.len));
           if (hm.body.len == (size_t) ~0) {
-            LOG(LL_ERROR,
-                        ("Invalid content-length, perhaps chunked-encoding"));
+            LOG(LL_ERROR, ("Invalid content-length, perhaps chunked-encoding"));
             ctx->status_msg =
                 "Invalid content-length, perhaps chunked-encoding";
             c->flags |= MG_F_CLOSE_IMMEDIATELY;
@@ -91,8 +90,7 @@ static void fw_download_handler(struct mg_connection *c, int ev, void *p,
 
         if (res < 0) {
           /* Error */
-          LOG(LL_ERROR,
-                      ("Update error: %d %s", ctx->result, ctx->status_msg));
+          LOG(LL_ERROR, ("Update error: %d %s", ctx->result, ctx->status_msg));
         }
         c->flags |= MG_F_CLOSE_IMMEDIATELY;
       }
@@ -121,7 +119,7 @@ static void fw_download_handler(struct mg_connection *c, int ev, void *p,
 
 void mgos_ota_http_start(struct update_context *ctx, const char *url) {
   LOG(LL_INFO, ("Update URL: %s, ct: %d, isv? %d", url,
-                        ctx->fctx.commit_timeout, ctx->ignore_same_version));
+                ctx->fctx.commit_timeout, ctx->ignore_same_version));
 
   struct mg_connect_opts opts;
   memset(&opts, 0, sizeof(opts));
@@ -177,8 +175,8 @@ bool mgos_ota_http_client_init(void) {
   if (scu->url != NULL && scu->interval > 0) {
     LOG(LL_INFO,
         ("Updates from %s, every %d seconds", scu->url, scu->interval));
-    mgos_set_timer(scu->interval * 1000, true /* repeat */,
-                   mgos_ota_timer_cb, scu->url);
+    mgos_set_timer(scu->interval * 1000, true /* repeat */, mgos_ota_timer_cb,
+                   scu->url);
   }
   return true;
 }
