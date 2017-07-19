@@ -6,11 +6,11 @@
 #include "mgos_ota_http_client.h"
 
 #include "common/cs_dbg.h"
-#include "fw/src/mgos_hal.h"
-#include "fw/src/mgos_mongoose.h"
-#include "fw/src/mgos_sys_config.h"
-#include "fw/src/mgos_timers.h"
-#include "fw/src/mgos_utils.h"
+#include "mgos_hal.h"
+#include "mgos_mongoose.h"
+#include "mgos_sys_config.h"
+#include "mgos_timers.h"
+#include "mgos_utils.h"
 
 #if MGOS_ENABLE_UPDATER
 

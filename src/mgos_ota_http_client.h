@@ -10,7 +10,7 @@
 
 #include <stdbool.h>
 
-#include "fw/src/mgos_updater_common.h"
+#include "mgos_updater_common.h"
 
 #ifdef __cplusplus
 extern "C" {
