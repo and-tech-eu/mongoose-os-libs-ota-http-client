@@ -126,20 +126,21 @@ void mgos_ota_http_start(struct update_context *ctx, const char *url) {
 
 #if MG_ENABLE_SSL
   if (strlen(url) > 8 && strncmp(url, "https://", 8) == 0) {
-    opts.ssl_server_name = get_cfg()->update.ssl_server_name;
-    opts.ssl_ca_cert = get_cfg()->update.ssl_ca_file;
-    opts.ssl_cert = get_cfg()->update.ssl_client_cert_file;
+    opts.ssl_server_name = mgos_sys_config_get_update_ssl_server_name();
+    opts.ssl_ca_cert = mgos_sys_config_get_update_ssl_ca_file();
+    opts.ssl_cert = mgos_sys_config_get_update_ssl_client_cert_file();
   }
 #endif
 
   char ehb[150];
   char *extra_headers = ehb;
-  const struct sys_ro_vars *rv = get_ro_vars();
-  mg_asprintf(&extra_headers, sizeof(ehb),
-              "X-MGOS-Device-ID: %s %s\r\n"
-              "X-MGOS-FW-Version: %s %s %s\r\n",
-              (get_cfg()->device.id ? get_cfg()->device.id : "-"),
-              rv->mac_address, rv->arch, rv->fw_version, rv->fw_id);
+  mg_asprintf(
+      &extra_headers, sizeof(ehb),
+      "X-MGOS-Device-ID: %s %s\r\n"
+      "X-MGOS-FW-Version: %s %s %s\r\n",
+      (mgos_sys_config_get_device_id() ? mgos_sys_config_get_device_id() : "-"),
+      mgos_sys_ro_vars_get_mac_address(), mgos_sys_ro_vars_get_arch(),
+      mgos_sys_ro_vars_get_fw_version(), mgos_sys_ro_vars_get_fw_id());
 
   struct mg_connection *c = mg_connect_http_opt(
       mgos_get_mgr(), fw_download_handler, ctx, opts, url, extra_headers, NULL);
@@ -159,24 +160,23 @@ void mgos_ota_http_start(struct update_context *ctx, const char *url) {
 }
 
 static void mgos_ota_timer_cb(void *arg) {
-  struct sys_config_update *scu = &get_cfg()->update;
-  if (scu->url == NULL) return;
+  if (mgos_sys_config_get_update_url() == NULL) return;
   struct update_context *ctx = updater_context_create();
   if (ctx == NULL) return;
   ctx->ignore_same_version = true;
-  ctx->fctx.commit_timeout = scu->commit_timeout;
-  mgos_ota_http_start(ctx, scu->url);
+  ctx->fctx.commit_timeout = mgos_sys_config_get_update_commit_timeout();
+  mgos_ota_http_start(ctx, mgos_sys_config_get_update_url());
 
   (void) arg;
 }
 
 bool mgos_ota_http_client_init(void) {
-  struct sys_config_update *scu = &get_cfg()->update;
-  if (scu->url != NULL && scu->interval > 0) {
-    LOG(LL_INFO,
-        ("Updates from %s, every %d seconds", scu->url, scu->interval));
-    mgos_set_timer(scu->interval * 1000, true /* repeat */, mgos_ota_timer_cb,
-                   scu->url);
+  const char *url = mgos_sys_config_get_update_url();
+  int interval = mgos_sys_config_get_update_interval();
+  if (url != NULL && interval > 0) {
+    LOG(LL_INFO, ("Updates from %s, every %d seconds", url, interval));
+    mgos_set_timer(interval * 1000, true /* repeat */, mgos_ota_timer_cb,
+                   (void *) url);
   }
   return true;
 }
