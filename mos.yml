@@ -21,6 +21,7 @@ tags:
   - c
   - ota
   - http
+  - rpc
 
 build_vars:
   MGOS_ENABLE_UPDATER: 1
