@@ -17,8 +17,6 @@ extern "C" {
 #endif /* __cplusplus */
 
 #if MGOS_ENABLE_UPDATER
-bool mgos_ota_http_client_init(void);
-
 void mgos_ota_http_start(struct update_context *ctx, const char *url);
 #endif
 
