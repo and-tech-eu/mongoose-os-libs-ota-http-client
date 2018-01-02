@@ -16,7 +16,7 @@ See https://mongoose-os.com/docs/reference/api.html#ota-http-client
 ## Configuration section
 
 
-```json
+```javascript
   "update": {
     "timeout": 300,
     "commit_timeout": 0,        // OTA commit timeout
