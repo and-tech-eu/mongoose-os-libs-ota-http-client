@@ -13,7 +13,7 @@ libs:
   - origin: https://github.com/mongoose-os-libs/ota-common
 
 config_schema:
-  - ["update.url", "s", {title : "Fetch updates form here"}]
+  - ["update.url", "s", {title : "Fetch updates from here"}]
   - ["update.interval", "i", {title : "Check for updates this often"}]
 
     # Default CA bundle for updating from mongoose-os.com (and any other site that uses LetsEncrypt) and S3.

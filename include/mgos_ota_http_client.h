@@ -15,22 +15,19 @@
  * limitations under the License.
  */
 
-#ifndef CS_MOS_LIBS_OTA_HTTP_CLIENT_SRC_MGOS_OTA_HTTP_CLIENT_H_
-#define CS_MOS_LIBS_OTA_HTTP_CLIENT_SRC_MGOS_OTA_HTTP_CLIENT_H_
+#pragma once
 
 #include <stdbool.h>
 
-#include "mgos_updater_common.h"
+#include "mgos_updater_internal.h"
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* __cplusplus */
+#endif
 
 /* Start OTA update by pulling the firmware from the given URL. */
 void mgos_ota_http_start(struct update_context *ctx, const char *url);
 
 #ifdef __cplusplus
 }
-#endif /* __cplusplus */
-
-#endif /* CS_MOS_LIBS_OTA_HTTP_CLIENT_SRC_MGOS_OTA_HTTP_CLIENT_H_ */
+#endif
