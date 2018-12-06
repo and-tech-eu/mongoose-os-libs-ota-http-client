@@ -15,6 +15,7 @@ libs:
 config_schema:
   - ["update.url", "s", {title : "Fetch updates from here"}]
   - ["update.interval", "i", {title : "Check for updates this often"}]
+  - ["update.extra_http_headers", "s", {title : "Extra HTTP request headers"}]
 
     # Default CA bundle for updating from mongoose-os.com (and any other site that uses LetsEncrypt) and S3.
   - ["update.ssl_ca_file", "s", "ca.pem", {title : "TLS CA file"}]

@@ -17,6 +17,7 @@ The library adds the following object to the device configuration:
     "commit_timeout": 0,        // OTA commit timeout
     "url": "",                  // HTTP URL to poll
     "interval": 0,              // Polling interval
+    "extra_http_headers": "",   // Extra HTTP request headers
     "ssl_ca_file": "ca.pem",    // TLS CA cert file
     "ssl_client_cert_file": "", // TLS cert file
     "ssl_server_name": "",      // TLS server name
