@@ -10,7 +10,7 @@ includes:
   - include
 
 libs:
-  - origin: https://github.com/cesanta/mongoose-os-libs/ota-common
+  - origin: https://github.com/mongoose-os-libs/ota-common
 
 config_schema:
   - ["update.url", "s", {title : "Fetch updates from here"}]
